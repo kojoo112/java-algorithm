@@ -2,21 +2,22 @@ package kojoo.java.algorithm.programmers.set;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Shiritori {
     public boolean solution(String[] words) {
         boolean answer = true;
 
-        Set<String> wordSet = new HashSet<>();
-        for (int i = 0; i < words.length; i++) {
-            Collections.addAll(wordSet, words);
+        for (int i = 0; i < words.length - 1; i++) {
+            char first = words[i].charAt(words[i].length() - 1);
+            if (first != words[i + 1].charAt(0)) {
+                return false;
+            }
         }
 
-        if (wordSet.size() != words.length) {
-            return false;
-        }
+        Set<String> wordSet = new HashSet<>(List.of(words));
 
-        return answer;
+        return wordSet.size() == words.length;
     }
 }
