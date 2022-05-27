@@ -1,6 +1,9 @@
 package kojoo.java.algorithm.programmers.dfs;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeSet;
 
 public class ConversionWord {
 
@@ -39,5 +42,52 @@ public class ConversionWord {
                 }
             }
         }
+    }
+
+    public int solution2(String begin, String target, String[] words) {
+        if (!Arrays.asList(words).contains(target)) {
+            return 0;
+        }
+
+        Stack<Word> stack = new Stack<>();
+        Set<String> used = new TreeSet<>();
+        stack.push(new Word(begin, 0));
+
+        while(!stack.isEmpty()) {
+            Word now = stack.pop();
+            String value = now.value;
+            int depth = now.depth;
+
+            if (value.equals(target)) {
+                return depth;
+            }
+            for (String s : words) {
+                if (isOneLetterDifferent(value, s) && !used.contains(s)) {
+                    used.add(s);
+                    stack.push(new Word(s, depth+1));
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private boolean isOneLetterDifferent(String now, String word) {
+        int count = 0;
+        for (int i = 0; i < now.length(); i++) {
+            if (now.charAt(i) != word.charAt(i)) {
+                count++;
+            }
+        }
+        return count == 1;
+    }
+}
+class Word {
+    String value;
+    int depth;
+
+    public Word(String value, int depth) {
+        this.value = value;
+        this.depth = depth;
     }
 }

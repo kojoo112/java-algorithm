@@ -1,5 +1,8 @@
 package kojoo.java.algorithm.programmers.dfs;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class ShortestDistance {
 
     int answer = Integer.MAX_VALUE;
@@ -38,5 +41,49 @@ public class ShortestDistance {
                 }
             }
         }
+    }
+
+    public int solution2(int[][] maps) {
+        int answer = -1;
+        int n = maps.length;
+        int m = maps[0].length;
+
+        boolean[][] visited2 = new boolean[n][m];
+        Queue<Location> stack = new LinkedList<>();
+        stack.offer(new Location(0, 0, 1));
+
+        while(!stack.isEmpty()) {
+            Location now = stack.poll();
+
+            if (now.x == n -1 && now.y == m - 1) {
+                return now.steps;
+            }
+            visited2[now.x][now.y] = true;
+
+            for (int i = 0; i < 4; i++) {
+                int nx = now.x + dx[i];
+                int ny = now.y + dy[i];
+
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
+                    if (maps[nx][ny] == 1 && !visited2[nx][ny]) {
+                        visited2[nx][ny] = true;
+                        stack.offer(new Location(nx, ny, now.steps + 1));
+                    }
+                }
+            }
+        }
+
+        return answer;
+    }
+}
+class Location {
+    int x;
+    int y;
+    int steps;
+
+    Location(int x, int y, int steps) {
+        this.x = x;
+        this.y = y;
+        this.steps = steps;
     }
 }

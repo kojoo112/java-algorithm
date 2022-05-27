@@ -14,7 +14,9 @@ class ShortestDistanceTest {
         int[][] maps2 = {{1, 0, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 1, 0, 0}, {0, 0, 0, 0, 1}};
 
 
-        assertEquals(11, shortestDistance.solution(maps1));
+//        assertEquals(11, shortestDistance.solution(maps1));
 //        assertEquals(-1, shortestDistance.solution(maps2));
+        assertEquals(11, shortestDistance.solution2(maps1));
+        assertEquals(-1, shortestDistance.solution2(maps2));
     }
 }
