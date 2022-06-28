@@ -34,7 +34,7 @@ public class NHNGame3 {
         Arrays.fill(answer, -1);
         int[] dx = {1, 0, -1, 0};
         int[] dy = {0, 1, 0, -1};
-        Queue<Position> stack = new LinkedList<>();
+        Queue<Position> queue = new LinkedList<>();
 
         for (int i = 0; i < queries.length; i++) {
             boolean[][] visited = new boolean[maze.length][maze[0].length()];
@@ -47,15 +47,15 @@ public class NHNGame3 {
             int targetY = Integer.parseInt(query[3]) - 1;
             String move = query[4];
 
-            stack.clear();
-            stack.offer(new Position(new Node(startX, startY), 1));
+            queue.clear();
+            queue.offer(new Position(new Node(startX, startY), 1));
 
             visited[startX][startY] = true;
-            while(!stack.isEmpty()) {
-                int size = stack.size();
+            while(!queue.isEmpty()) {
+                int size = queue.size();
 
                 for (int j = 0; j < size; j++) {
-                    Position now  = stack.poll();
+                    Position now  = queue.poll();
 
                     for (int k = 0; k < 4; k++) {
                         int nx = now.node.x + dx[k];
@@ -71,7 +71,7 @@ public class NHNGame3 {
                             for (int s = 0; s < move.length(); s++) {
                                 if (maze[nx].charAt(ny) == move.charAt(s) && !visited[nx][ny]) {
                                     visited[nx][ny] = true;
-                                    stack.offer(new Position(new Node(nx, ny), now.steps + 1));
+                                    queue.offer(new Position(new Node(nx, ny), now.steps + 1));
                                 }
                             }
                         }

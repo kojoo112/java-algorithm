@@ -1,0 +1,88 @@
+package kojoo.java.algorithm.baekjoon.step11;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
+public class Question_2108 {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        List<Integer> list = new ArrayList<>();
+        HashMap<Integer, Integer> hashmap = new HashMap<>();
+
+        int loop = Integer.parseInt(br.readLine());
+        double sum = 0;
+
+        for (int i = 0; i < loop; i++) {
+            int temp = Integer.parseInt(br.readLine());
+            sum += temp;
+            list.add(temp);
+        }
+
+        // 중앙값을 찾기 위해 미리 정렬
+        Collections.sort(list);
+
+        int max = Collections.max(list);
+        int min = Collections.min(list);
+
+        // 둘다 음수 일 경우
+        if (max < 0 && min < 0) {
+            min = Math.abs(min);
+        }
+        // 둘다 양수 일 경우
+        else if (max > 0 && min > 0) {
+            min = min * -1;
+        }
+        // min, max서로 부호가 다를 때, 둘중에 하나라도 0일 때
+        else {
+            max = Math.abs(max);
+            min = Math.abs(min);
+        }
+
+        double dle = sum / loop;
+        int average = (int) Math.round(dle);
+        int median = list.get(loop / 2);
+        int mode = 0;
+        int range = max + min;
+
+        for (int num : list) {
+            // 숫자가 한번 나올 때마다 1이 추가됨.
+            hashmap.put(num, hashmap.getOrDefault(num, 0) + 1);
+        }
+
+        int numbers = 0;
+        for (int key : hashmap.values()) {
+            numbers = Math.max(numbers, key);
+        }
+
+        // 위에서 사용했던 list를 다시 사용하기 위해 clear 처리
+        // 최빈수를 구하기 최빈수와 같은 빈도의 수를 list에 삽입
+        list.clear();
+        for (int key : hashmap.keySet()) {
+            if (hashmap.get(key) == numbers) {
+                list.add(key);
+            }
+        }
+
+        // 최빈수가 2개 이상일 경우 2번째로 작은 값을 뽑아내야 하기 때문에 list를 정렬
+        Collections.sort(list);
+
+        // 최빈수와 빈도수가 같은 수가 2개 이상인경우 index 1의 값을 최빈수로 설정
+        // 1개일 경우는 그대로 index 0을 최빈수로 설정
+        if (list.size() >= 2) {
+            mode = list.get(1);
+        } else {
+            mode = list.get(0);
+        }
+
+        System.out.println(average);
+        System.out.println(median);
+        System.out.println(mode);
+        System.out.println(range);
+    }
+
+}
