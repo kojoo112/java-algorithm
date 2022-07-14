@@ -172,14 +172,14 @@ Temporary Items
 *.icloud
 
 ### Gradle ###
-.gradle
-gradle/
-**/build/
-!src/**/build/
-build.gradle
-gradlew
-gradlew.bat
-settings.gradle
+#.gradle
+#gradle/
+#**/build/
+#!src/**/build/
+#build.gradle
+#gradlew
+#gradlew.bat
+#settings.gradle
 
 # Ignore Gradle GUI config
 gradle-app.setting
